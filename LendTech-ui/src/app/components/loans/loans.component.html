@@ -1,0 +1,20 @@
+<div style="text-align: center;">
+    <table>
+      <tr>
+        <th>Amount</th>
+        <th>Account Balance</th>
+        <th>Transaction Date</th>
+      </tr>
+      <tr *ngFor="let transaction of transactions">
+        <td>
+          {{transaction.amount}}
+        </td>
+        <td>
+          {{transaction.account_balance}}
+        </td>
+        <td>
+          {{transaction.transactionDate}}
+        </td>
+      </tr>
+    </table>
+  </div>

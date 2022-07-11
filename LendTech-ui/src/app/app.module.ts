@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { LendtechService } from './services/lendtech.service';
 import { WalletComponent } from './components/wallet/wallet.component';
 import { HomeComponent } from './components/home/home.component';
+import { LoansComponent } from './components/loans/loans.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WalletComponent,
-    HomeComponent
+    HomeComponent,
+    LoansComponent
   ],
   imports: [
     BrowserModule,

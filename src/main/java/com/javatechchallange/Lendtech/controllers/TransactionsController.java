@@ -28,6 +28,21 @@ public class TransactionsController {
 	@Autowired
 	private TransactionsRepository transactionsRepository;
 	//get all transactions for a customer
+	@GetMapping("/payments/{id}")
+	public List<Transactions> getCustomerAllLoanTransactions(@PathVariable("id") long id) {
+		
+		
+		List<Transactions> rawData =  transactionsRepository.findAll();
+		List<Transactions> results = new LinkedList<Transactions>();
+		// && t.getTransactionDate().compareTo(d1) >= 0 
+		for(Transactions t : rawData) {
+			if(t.getFromCustomerID() == id) {
+				results.add(t);
+			}
+		}
+		return results;
+	}
+	
 	@GetMapping("/loans/{id}/{fromDate}/{toDate}")
 	public List<Transactions> getCustomerLoanTransactions(@PathVariable("id") long id,@PathVariable("fromDate") String fromDate,@PathVariable("toDate") String toDate) {
 		
@@ -61,12 +76,31 @@ public class TransactionsController {
 	}
 	
 	
-	@GetMapping("/payments/{id}")
-	public List<Transactions> getCustomerPaymentsTransactions(@PathVariable("id") long id) {
+	@GetMapping("/payments/{id}/{fromDate}/{toDate}")
+	public List<Transactions> getCustomerPaymentsTransactions(@PathVariable("id") long id,@PathVariable("fromDate") String fromDate,@PathVariable("toDate") String toDate) {
+		
+		SimpleDateFormat sdf1 = new SimpleDateFormat("MM-dd-yyyy");
+		java.util.Date date = null;
+		try {
+			date = sdf1.parse(fromDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		java.sql.Date d1 = new java.sql.Date(date.getTime());
+		
+		try {
+			date = sdf1.parse(toDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		java.sql.Date d2 = new java.sql.Date(date.getTime());
+		
 		List<Transactions> rawData =  transactionsRepository.findAll();
 		List<Transactions> results = new LinkedList<Transactions>();
 		for(Transactions t : rawData) {
-			if(t.getFromCustomerID() == id) {
+			if(t.getFromCustomerID() == id  && t.getTransactiontype() != 1 && t.getTransactionDate().compareTo(d1) >= 0  && t.getTransactionDate().compareTo(d2) <= 0) {
 				results.add(t);
 			}
 		}
