@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 
 import { LendtechService } from './services/lendtech.service';
 import { WalletComponent } from './components/wallet/wallet.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WalletComponent
+    WalletComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

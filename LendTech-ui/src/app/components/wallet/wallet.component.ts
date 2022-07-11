@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LendtechService } from '../../services/lendtech.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-wallet',
@@ -10,14 +11,15 @@ export class WalletComponent implements OnInit {
 
   public transactions;
 
-  constructor(private lendtechService: LendtechService) { }
+  constructor(private lendtechService: LendtechService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getTransactions();
+    this.getTransactions(this.route.snapshot.params['id']);
   }
 
-  getTransactions(){
-    this.lendtechService.getTransactions().subscribe(
+ 
+  getTransactions(id:number){
+    this.lendtechService.getCustomerTransactions(id).subscribe(
       data => {this.transactions = data},
       err => console.error(err)
       );
